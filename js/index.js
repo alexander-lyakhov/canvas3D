@@ -33,14 +33,18 @@ const fs = [
 	[3, 7],
 ];
 
+// =============================================================================
+// @@@ [ M ] clear
+// =============================================================================
 function clear() {
 	ctx.fillStyle = BACKGROUND;
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
+// =============================================================================
+// @@@ [ M ] drawPoint
+// =============================================================================
 function drawPoint({ x, y }) {
-	// console.log(x, y)
-
 	ctx.fillStyle = FOREGROUND;
 	ctx.fillRect(
 		x - SIZE * scale / 2,
@@ -48,10 +52,11 @@ function drawPoint({ x, y }) {
 		SIZE * scale,
 		SIZE * scale,
 	);
-
-	// console.log(SIZE * scale)
 }
 
+// =============================================================================
+// @@@ [ M ] pointToScreen
+// =============================================================================
 function pointToScreen({x, y}) {
 	return {
 		x: (x + 1) / 2 * canvas.width,
@@ -59,6 +64,9 @@ function pointToScreen({x, y}) {
 	}
 }
 
+// =============================================================================
+// @@@ [ M ] project
+// =============================================================================
 function project({x, y, z}) {
 	scale = 1 / z;
 
@@ -68,6 +76,9 @@ function project({x, y, z}) {
 	}
 }
 
+// =============================================================================
+// @@@ [ M ] translate_z
+// =============================================================================
 function translate_z({ x, y, z }, dz) {
 	return {
 		x,
@@ -118,7 +129,10 @@ function rotate_yz({ x, y, z }, angle) {
 	}
 }
 
-function line(p1, p2) {
+// =============================================================================
+// @@@ [ M ] drawLine
+// =============================================================================
+function drawLine(p1, p2) {
 	ctx.strokeStyle = FOREGROUND;
 	ctx.lineWidth = 3;
 
@@ -135,8 +149,8 @@ const dt = 1 / FPS;
 function frame() {
 	clear();
 
-	// dz += dt;
 	angle += dt;
+	// dz += dt;
 	/*
 	for (let v of vs) {
 		// v = rotate_xy(v, angle);
@@ -151,11 +165,16 @@ function frame() {
 			let u = rotate_xz(vs[f[i]], angle);
 			let v = rotate_xz(vs[f[(i + 1) % f.length]], angle);
 
-			// if (Math.abs(u.z <= 0.5) && Math.abs(u.x >= 0.5))
+			let [a, b] = u.z < v.z ? [u, v] : [v, u];
+
+			a = project(translate_z(a, dz));
+			b = project(translate_z(b, dz));
+
+			// if (Math.abs(b.x) >= Math.abs(a.x))
 			{
-				line(
-					pointToScreen(project(translate_z(u, dz))),
-					pointToScreen(project(translate_z(v, dz))),
+				drawLine(
+					pointToScreen(a),
+					pointToScreen(b),
 				);
 			}
 		}
