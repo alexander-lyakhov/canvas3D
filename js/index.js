@@ -37,8 +37,9 @@ const fs = [
 // @@@ [ M ] clear
 // =============================================================================
 function clear() {
-	ctx.fillStyle = BACKGROUND;
-	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	/*ctx.fillStyle = BACKGROUND;
+	ctx.fillRect(0, 0, canvas.width, canvas.height);*/
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 // =============================================================================
