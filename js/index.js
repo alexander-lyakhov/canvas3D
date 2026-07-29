@@ -11,7 +11,7 @@ const FPS = 60;
 let scale = 1;
 
 const vs = [
-	
+	/*	
 	{ x: -0.5, y:  0.5, z: 0.5 },
 	{ x: -0.5, y: -0.5, z: 0.5 },
 	{ x:  0.5, y: -0.5, z: 0.5 },	
@@ -21,6 +21,16 @@ const vs = [
 	{ x: -0.5, y: -0.5, z: -0.5 },
 	{ x:  0.5, y: -0.5, z: -0.5 },
 	{ x:  0.5, y:  0.5, z: -0.5 },
+	*/
+	{ x: -1, y:  1, z: 1 },
+	{ x: -1, y: -1, z: 1 },
+	{ x:  1, y: -1, z: 1 },	
+	{ x:  1, y:  1, z: 1 },
+	
+	{ x: -1, y:  1, z: -1 },
+	{ x: -1, y: -1, z: -1 },
+	{ x:  1, y: -1, z: -1 },
+	{ x:  1, y:  1, z: -1 },
 	
 ];
 
@@ -143,7 +153,7 @@ function drawLine(p1, p2) {
 	ctx.stroke();
 }
 
-let dz = 2;
+let dz = 4;
 let angle = 0;
 let last_update = null
 
