@@ -145,12 +145,22 @@ function drawLine(p1, p2) {
 
 let dz = 2;
 let angle = 0;
-const dt = 1 / FPS;
+let last_update = null
 
-function frame() {
+function firstFrame(timestamp) {
+	last_update = timestamp;
+	requestAnimationFrame(frame);
+}
+
+function frame(timestamp) {
+	const dt = (timestamp - last_update) / 1000;
+
 	clear();
 
+	last_update = timestamp;
+
 	angle += dt;
+
 	// dz += dt;
 	/*
 	for (let v of vs) {
@@ -180,7 +190,11 @@ function frame() {
 			}
 		}
 	}
+
+	requestAnimationFrame(frame);
 }
 
 // drawPoint(pointToScreen(project(translate_z(vs[0], 0))));
-setInterval(frame, 1000 / FPS);
+// setInterval(frame, 1000 / FPS);
+
+requestAnimationFrame(firstFrame);
